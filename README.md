@@ -1,5 +1,3 @@
----
-
 # CLI To-Do List (cli_todolist)
 
 `cli_todolist` is a simple, terminal-based to-do list manager that lets you manage tasks directly from the command line. You can add tasks, mark them as finished, delete them, and view your to-do list. All commands are case-insensitive for convenience.
