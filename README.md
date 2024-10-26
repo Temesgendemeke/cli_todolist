@@ -1,5 +1,3 @@
-Here's a README template for your CLI to-do list project:
-
 ---
 
 # CLI To-Do List (cli_todolist)
