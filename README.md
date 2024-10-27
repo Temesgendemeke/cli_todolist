@@ -26,6 +26,7 @@ sudo mv todo /usr/local/bin/todo
 
 ## Usage
 
+<<<<<<< HEAD
 | Command                      | Description                                        | Example               |
 | ---------------------------- | -------------------------------------------------- | --------------------- |
 | `add <task name>`            | Adds a new task to the to-do list.                 | `add Finish homework` |
@@ -33,6 +34,15 @@ sudo mv todo /usr/local/bin/todo
 | `done <index>`               | Marks a task as finished.                          | `done 3`              |
 | `show`                       | Displays all current tasks.                        | `show`                |
 | `help`                       | Lists all available commands with descriptions.    | `help`                |
+=======
+| Command              | Description                                   | Example                 |
+|----------------------|-----------------------------------------------|-------------------------|
+| `todo add <task name>`    | Adds a new task to the to-do list.            | `add Finish homework`   |
+| `todo x <index>` or `del <index>` | Deletes a task by its index, marking it if needed. | `x 2` or `del 2`       |
+| `todo done <index>`       | Marks a task as finished.                     | `done 3`                |
+| `todo show`               | Displays all current tasks.                   | `show`                  |
+| `todo help`               | Lists all available commands with descriptions.| `help`                 |
+>>>>>>> refs/remotes/origin/main
 
 ### Examples
 
