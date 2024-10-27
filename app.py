@@ -175,15 +175,15 @@ def main():
     elif command == "HELP":
         print("\nCommands:")
         print(
-            "  add <task>      - Adds a new task to your to-do list with the specified description"
+            "  todo add <task>      - Adds a new task to your to-do list with the specified description"
         )
-        print("  done <index>    - Marks the task at the given index as completed")
+        print("  todo done <index>    - Marks the task at the given index as completed")
         print(
-            "  del <index>     - Deletes the task at the given index without marking it as done"
+            "  todo del <index>     - Deletes the task at the given index without marking it as done"
         )
-        print("  show            - Lists all tasks with their indexes and status")
+        print("  todo show            - Lists all tasks with their indexes and status")
         print(
-            "  help            - Shows this help message with descriptions of all commands"
+            "  todo help            - Shows this help message with descriptions of all commands"
         )
 
 
