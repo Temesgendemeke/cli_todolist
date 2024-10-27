@@ -25,11 +25,11 @@ sudo mv todo /usr/local/bin/todo
 
 | Command              | Description                                   | Example                 |
 |----------------------|-----------------------------------------------|-------------------------|
-| `add <task name>`    | Adds a new task to the to-do list.            | `add Finish homework`   |
-| `x <index>` or `del <index>` | Deletes a task by its index, marking it if needed. | `x 2` or `del 2`       |
-| `done <index>`       | Marks a task as finished.                     | `done 3`                |
-| `show`               | Displays all current tasks.                   | `show`                  |
-| `help`               | Lists all available commands with descriptions.| `help`                 |
+| `todo add <task name>`    | Adds a new task to the to-do list.            | `add Finish homework`   |
+| `todo x <index>` or `del <index>` | Deletes a task by its index, marking it if needed. | `x 2` or `del 2`       |
+| `todo done <index>`       | Marks a task as finished.                     | `done 3`                |
+| `todo show`               | Displays all current tasks.                   | `show`                  |
+| `todo help`               | Lists all available commands with descriptions.| `help`                 |
 
 ### Examples
 - Add a task:
