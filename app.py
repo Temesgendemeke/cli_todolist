@@ -3,6 +3,14 @@
 from sys import argv
 import json
 import os
+from pathlib import Path
+
+home_dir = Path.home()
+todo_dir = home_dir / ".todos"
+todo_file = todo_dir / "todos.json"
+todo_counter_file = todo_dir / "todos_counter.json"
+
+os.makedirs(todo_dir, exist_ok=True)
 
 
 class Task:
@@ -16,7 +24,7 @@ class Todos:
 
     def __init__(self) -> None:
         self.head = None
-        self.start_up(self.read_json("todos.json"))
+        self.start_up(self.read_json(todo_file))
 
     def start_up(self, todos):
         for todo in todos:
@@ -28,14 +36,18 @@ class Todos:
         newTask.next = head
         self.head = newTask
         if mode == "w":
-            self.write_to_json("todos.json", task)
+            self.write_to_json(todo_file, task)
             print(f"+ added {task}")
 
     def done(self, index):
         head = self.head
+        if index == 0 or len(self.read_json(todo_file)) < index:
+            print("NO TODOS TO MARK")
+            return
 
-        if index == 1:
+        if index == 1 and len(self.read_json(todo_file)) >= index:
             self.delete_from_todos(index - 1)
+            self.add_to_finshed(head.title)
             self.head = head.next
             return
 
@@ -47,7 +59,7 @@ class Todos:
             return
 
         # write_to_json
-        self.write_to_json("finshed_task.json", head.next.title)
+        self.write_to_json(todo_counter_file, head.next.title)
         self.delete_from_todos(index - 1)
 
         self.add_to_finshed(head.next.title)
@@ -75,11 +87,13 @@ class Todos:
         while head:
             head = head.next
             index += 1
-        with open("todos.json", "r") as file:
+        with open(todo_file, "r") as file:
             todos = json.load(file)
 
         print('"IF IT WAS EASY EVERYBODY CAN DO IT"\n')
         print("TODOS 🔐")
+        if len(todos) == 0:
+            print("add todos champ!! 🎯")
         for i in range(len(todos)):
             print("[{}] {}".format(i + 1, todos[i]["task"]))
 
@@ -104,15 +118,15 @@ class Todos:
         return todos
 
     def delete_from_todos(self, index):
-        with open("todos.json", "r") as file:
+        with open(todo_file, "r") as file:
             todos = json.load(file)
-        del todos[index]
-
-        with open("todos.json", "w") as file:
+        if index <= len(todos):
+            del todos[index]
+        with open(todo_file, "w") as file:
             json.dump(todos, file)
 
     def count_finshed_task(self):
-        path = "finshed_task_counter"
+        path = "finshed_task_counter.json"
         finshed_task = dict(self.read_json(path))
         if finshed_task == {}:
             with open(path, "w") as file:
@@ -120,23 +134,27 @@ class Todos:
         else:
             finshed_task["count"] += 1
             with open(path, "w") as file:
-                json.dump({"count": finshed_task}, file)
+                json.dump(finshed_task, file)
 
-
-def check_type(index):
-    try:
-        int(index)
-    except ValueError:
-        print("Invalid Index")
-        return 1
+    def check_type(self, index):
+        try:
+            int(index)
+        except ValueError:
+            print("Invalid Index")
+            return 1
 
 
 def main():
-    if len(argv) < 2 and argv[2] == "help":
-        print("usage: ADD|DONE|REMOVE")
-        print("ADD <todo> - to add todos")
-        print("DONE <index> - to mark todo")
-        print("X <index> - to remove todos without marking")
+    if len(argv) < 2:
+        print("Usage:")
+        print("  add <task>      - Add a new task to your to-do list")
+        print("  done <index>    - Mark a task as completed by its index")
+        print(
+            "  del <index>     - Delete a task by its index (without marking it as done)"
+        )
+        print("  show            - Display all tasks with their status and index")
+        print("  help            - Show this help message")
+        return
     todos = Todos()
 
     command = argv[1].upper()
@@ -145,15 +163,28 @@ def main():
     if command == "ADD":
         todos.add(task, "w")
     elif command == "DONE":
-        if check_type(argv[2]) == 1:
+        if todos.check_type(argv[2]) == 1:
             return
         todos.done(int(argv[2]))
     elif command == "X" or command == "del":
-        if check_type(argv[2]) == 1:
+        if todos.check_type(argv[2]) == 1:
             return
         todos.remove(int(argv[2]))
     elif command == "SHOW":
         todos.show()
+    elif command == "HELP":
+        print("\nCommands:")
+        print(
+            "  add <task>      - Adds a new task to your to-do list with the specified description"
+        )
+        print("  done <index>    - Marks the task at the given index as completed")
+        print(
+            "  del <index>     - Deletes the task at the given index without marking it as done"
+        )
+        print("  show            - Lists all tasks with their indexes and status")
+        print(
+            "  help            - Shows this help message with descriptions of all commands"
+        )
 
 
 if __name__ == "__main__":
