@@ -16,6 +16,11 @@ git clone https://github.com/Temesgendemeke/cli_todolist.git
 cd cli_todolist
 ```
 
+```bash
+cp app.py todo
+sudo mv todo /usr/local/bin/todo
+```
+
 ## Usage
 
 | Command              | Description                                   | Example                 |
